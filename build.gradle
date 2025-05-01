@@ -5,19 +5,18 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.2.0"
+    id('java')
+    id "org.jetbrains.intellij" version "1.17.3"
 }
 
 apply plugin: 'idea'
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
 
 repositories {
     mavenCentral()
 }
 
 intellij {
-    version = 'IC-2021.2.3'
+    version = '2023.2.6'
     plugins = ['coverage']   //Bundled plugin dependencies
     pluginName = 'org4idea'
     updateSinceUntilBuild = false

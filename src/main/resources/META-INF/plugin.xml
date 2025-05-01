@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
     <name>Org4Idea</name>
     <description>An OrgMode editor for IntelliJ IDEA</description>
     <category>Custom Languages</category>
@@ -8,7 +8,7 @@
     <depends>com.intellij.modules.lang</depends>
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="203"/>
+    <idea-version since-build="203" until-build="999.*"/>
 
     <description>
         <![CDATA[
