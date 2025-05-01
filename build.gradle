@@ -1,26 +1,35 @@
 buildscript {
     repositories {
         mavenCentral()
+        // 添加 JetBrains 的 plugin 仓库以解决 GrammarKit 插件问题
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.2.0"
+    id('java')
+    id "org.jetbrains.intellij" version "1.17.3"
+    id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 apply plugin: 'idea'
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
 
 repositories {
     mavenCentral()
 }
 
 intellij {
-    version = 'IC-2021.2.3'
-    plugins = ['coverage']   //Bundled plugin dependencies
+    version = '2023.2.6'
+    plugins = []   //Bundled plugin dependencies
     pluginName = 'org4idea'
     updateSinceUntilBuild = false
+}
+
+tasks {
+    patchPluginXml {
+        sinceBuild.set("232")
+        untilBuild.set("999.*")
+    }
 }
 
 publishPlugin {
@@ -28,3 +37,35 @@ publishPlugin {
 }
 
 group 'tk.skuro.intellij'
+
+// 生成 lexer
+//task generateLexer(type: org.jetbrains.grammarkit.tasks.GenerateLexer) {
+//    sourceFile = file("src/main/grammar/OrgLexer.flex") // 修改为你的 .flex 路径
+//    targetDir = "src/main/gen/tk/skuro/intellij/org4idea/lexer" // 修改为你期望输出的位置
+//    targetClass = "_OrgLexer"
+//    purgeOldFiles = true
+//}
+//
+//// 生成 parser
+//task generateParser(type: org.jetbrains.grammarkit.tasks.GenerateParser) {
+//    sourceFile = file("src/main/grammar/Org.bnf") // 修改为你的 .bnf 路径
+//    targetRoot = "src/main/gen"
+//    pathToParser = "/tk/skuro/intellij/org4idea/parser/OrgParser.java" // 输出的 parser 类路径
+//    pathToPsiRoot = "/tk/skuro/intellij/org4idea/psi" // 输出的 PSI 类目录
+//    purgeOldFiles = true
+//}
+//
+//// 添加到编译前
+//compileJava.dependsOn generateLexer, generateParser
+
+// 告诉 IntelliJ 把 src/main/gen 加入到 sourceSets 中
+//sourceSets {
+//    main {
+//        java.srcDirs += "src/main/gen"
+//    }
+//}
+//
+//grammarKit {
+//  jflexRelease.set("1.7.0-1")
+//  grammarKitRelease.set("2021.1.2")
+//}

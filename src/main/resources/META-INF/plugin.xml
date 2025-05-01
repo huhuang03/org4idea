@@ -1,14 +1,11 @@
-<idea-plugin version="2">
+<idea-plugin>
     <name>Org4Idea</name>
     <description>An OrgMode editor for IntelliJ IDEA</description>
     <category>Custom Languages</category>
-    <version>0.4.1</version>
+    <version>0.4.2-dev</version>
     <vendor email="skuro@skuro.tk" url="http://skuro.tk">Carlo Sciolla</vendor>
     <id>Org4Idea</id>
     <depends>com.intellij.modules.lang</depends>
-
-    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="203"/>
 
     <description>
         <![CDATA[
