@@ -25,6 +25,13 @@ intellij {
     updateSinceUntilBuild = false
 }
 
+tasks {
+    patchPluginXml {
+        sinceBuild.set("232")
+        untilBuild.set("999.*")
+    }
+}
+
 publishPlugin {
     token = project.findProperty('jetbrains_token') ?: ""
 }
