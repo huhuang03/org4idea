@@ -17,6 +17,8 @@ public interface OrgHighlighterColors {
      */
     TextAttributesKey OUTLINE_ATTR_KEY = createTextAttributesKey("ORG.OUTLINE", KEYWORD);
 
+    TextAttributesKey VERBATIM_ATTR_KEY = createTextAttributesKey("ORG.VERBATIM", STRING);
+
     /**
      * Default style of comments
      */

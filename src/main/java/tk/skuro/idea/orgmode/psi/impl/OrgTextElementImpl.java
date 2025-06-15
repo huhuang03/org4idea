@@ -21,6 +21,7 @@ public class OrgTextElementImpl extends OrgPsiElementImpl implements OrgTextElem
     visitor.visitTextElement(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof OrgVisitor) accept((OrgVisitor)visitor);
     else super.accept(visitor);

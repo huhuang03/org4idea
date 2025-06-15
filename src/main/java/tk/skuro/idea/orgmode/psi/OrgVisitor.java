@@ -23,6 +23,10 @@ public class OrgVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitVerbatimElement(@NotNull OrgVerbatimElement o) {
+    visitPsiElement(o);
+  }
+
   public void visitPsiElement(@NotNull PsiElement o) {
     visitElement(o);
   }

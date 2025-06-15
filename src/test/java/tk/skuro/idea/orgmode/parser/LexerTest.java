@@ -50,7 +50,7 @@ public class LexerTest {
     @Test
     public void canReadOutlines() {
         final String outlines =
-                "* I'm an outline\n" +
+            "* I'm an outline\n" +
                 "** I'm a second outline";
         lexer.start(outlines);
         assertEquals("Outline not properly parsed", OrgTokenTypes.OUTLINE, lexer.getTokenType());
@@ -59,10 +59,27 @@ public class LexerTest {
         assertEquals("Outline not properly parsed", OrgTokenTypes.OUTLINE, lexer.getTokenType());
     }
 
+
+    @Test
+    public void canReadVerbatim() {
+        final String outlines =
+            "~some inline code~ end";
+        printTokens(outlines);
+        lexer.start(outlines);
+
+        // 第一个 token 是 TEXT（"haha "）
+        // 第二个 token 是 VERBATIM（"~some inline code~"）
+        assertEquals("Expected VERBATIM token", OrgTokenTypes.VERBATIM, lexer.getTokenType());
+        lexer.advance();
+        eatWhitespace();
+        // 第三个 token 是 TEXT（" end"）
+        assertEquals("Expected TEXT token", OrgTokenTypes.TEXT, lexer.getTokenType());
+    }
+
     @Test
     public void canReadBlocks() {
         final String block =
-                "#+BEGIN_SRC\n" +
+            "#+BEGIN_SRC\n" +
                 "(defn foobar)\n" +
                 "#+END_SRC";
 
@@ -79,18 +96,18 @@ public class LexerTest {
     }
 
     @Test
-    public void detectsWrongBlocks(){
+    public void detectsWrongBlocks() {
         final String notABlock =
-                        "#+END_SRC\n" +
-                        "(defn foobar)\n" +
-                        "#+BEGIN_SRC";
+            "#+END_SRC\n" +
+                "(defn foobar)\n" +
+                "#+BEGIN_SRC";
 
         lexer.start(notABlock);
         assertEquals("Block end not properly parsed", OrgTokenTypes.UNMATCHED_DELIMITER, lexer.getTokenType());
     }
 
     @Test
-    public void canReadKeyword(){
+    public void canReadKeyword() {
         final String keyword = "#+FOOBAR: foobar all the way down";
 
         lexer.start(keyword);
@@ -98,7 +115,7 @@ public class LexerTest {
     }
 
     @Test
-    public void canReadKeywordWithHeadingWhitespace(){
+    public void canReadKeywordWithHeadingWhitespace() {
         final String keyword = "   #+FOOBAR: foobar all the way down";
 
         lexer.start(keyword);
@@ -106,7 +123,7 @@ public class LexerTest {
     }
 
     @Test
-    public void canReadUnderline(){
+    public void canReadUnderline() {
         final String underlined = "_Ima underline text_";
 
         lexer.start(underlined);
@@ -115,7 +132,7 @@ public class LexerTest {
     }
 
     @Test
-    public void canReadBold(){
+    public void canReadBold() {
         final String bold = " *I'm a bold text*";
         lexer.start(bold);
 
@@ -135,9 +152,9 @@ public class LexerTest {
     }
 
     @Test
-    public void canReadProperties(){
+    public void canReadProperties() {
         final String properties =
-                "    :PROPERTIES:\n" +
+            "    :PROPERTIES:\n" +
                 "       :TEST: foo\n" +
                 "    :END:";
 
@@ -164,14 +181,22 @@ public class LexerTest {
         eatUntil(OrgTokenTypes.BLOCK_CONTENT);
     }
 
-    private void eatPropertiesContent(){
+    private void eatPropertiesContent() {
         eatUntil(OrgTokenTypes.DRAWER_CONTENT);
     }
 
     private void eatUntil(final IElementType... stop) {
         Set<IElementType> ignores = new HashSet<IElementType>(stop.length);
         ignores.addAll(Arrays.asList(stop));
-        while(ignores.contains(lexer.getTokenType())) {
+        while (ignores.contains(lexer.getTokenType())) {
+            lexer.advance();
+        }
+    }
+
+    private void printTokens(String input) {
+        lexer.start(input);
+        while (lexer.getTokenType() != null) {
+            System.out.println("TOKEN: " + lexer.getTokenType() + " | '" + lexer.getTokenText() + "'");
             lexer.advance();
         }
     }

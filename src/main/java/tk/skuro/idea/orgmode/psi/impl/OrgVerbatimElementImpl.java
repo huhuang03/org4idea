@@ -11,14 +11,14 @@ import static tk.skuro.idea.orgmode.parser.OrgTokenTypes.*;
 import tk.skuro.idea.orgmode.psi.OrgPsiElementImpl;
 import tk.skuro.idea.orgmode.psi.*;
 
-public class OrgDrawerImpl extends OrgPsiElementImpl implements OrgDrawer {
+public class OrgVerbatimElementImpl extends OrgPsiElementImpl implements OrgVerbatimElement {
 
-  public OrgDrawerImpl(ASTNode node) {
+  public OrgVerbatimElementImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull OrgVisitor visitor) {
-    visitor.visitDrawer(this);
+    visitor.visitVerbatimElement(this);
   }
 
   @Override

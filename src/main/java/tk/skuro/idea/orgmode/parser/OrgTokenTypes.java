@@ -12,6 +12,7 @@ public interface OrgTokenTypes {
   IElementType DRAWER = new OrgTokenType("DRAWER");
   IElementType OUTLINE_BLOCK = new OrgTokenType("OUTLINE_BLOCK");
   IElementType TEXT_ELEMENT = new OrgTokenType("TEXT_ELEMENT");
+  IElementType VERBATIM_ELEMENT = new OrgTokenType("VERBATIM_ELEMENT");
 
   IElementType BLOCK_CONTENT = new OrgElementType("BLOCK_CONTENT");
   IElementType BLOCK_END = new OrgElementType("BLOCK_END");
@@ -28,12 +29,13 @@ public interface OrgTokenTypes {
   IElementType TEXT = new OrgElementType("TEXT");
   IElementType UNDERLINE = new OrgElementType("UNDERLINE");
   IElementType UNMATCHED_DELIMITER = new OrgElementType("UNMATCHED_DELIMITER");
+  IElementType VERBATIM = new OrgElementType("VERBATIM");
   IElementType WHITE_SPACE = new OrgElementType("WHITE_SPACE");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == BLOCK) {
+      if (type == BLOCK) {
         return new OrgBlockImpl(node);
       }
       else if (type == DRAWER) {
@@ -44,6 +46,9 @@ public interface OrgTokenTypes {
       }
       else if (type == TEXT_ELEMENT) {
         return new OrgTextElementImpl(node);
+      }
+      else if (type == VERBATIM_ELEMENT) {
+        return new OrgVerbatimElementImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

@@ -21,6 +21,7 @@ public class OrgOutlineBlockImpl extends OrgPsiElementImpl implements OrgOutline
     visitor.visitOutlineBlock(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof OrgVisitor) accept((OrgVisitor)visitor);
     else super.accept(visitor);

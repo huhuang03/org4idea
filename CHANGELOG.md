@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.2] - 2025-06-15
+### ADD
++ add ~xxx~ syntax
+### CHANGED
++ fork from 0.4.0
+
 ## [0.4.0] - 2018-08-29
 ### Added
 + New action to insert a new outline (similar to C-RET in emacs), with a default key binding of <pre>ctrl alt meta enter</pre>
