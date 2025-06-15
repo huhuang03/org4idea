@@ -7,28 +7,19 @@ import com.intellij.openapi.actionSystem.impl.SimpleDataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.TestActionEvent;
-import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import org.junit.After;
-import org.junit.Before;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import org.junit.Test;
 
-public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase {
+public class NewOutlineSameLevelTest extends BasePlatformTestCase {
 
     private NewOutlineSameLevel action = new NewOutlineSameLevel();
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testNewOutlineInEmptyFile() {
         addOutlineAndAssertCaret("", "* ".length());
     }
 
+    @Test
     public void testNewOutlineInFileWithNoOutlines() {
         final String orgText =
             "#+BEGIN_SRC\n" +
@@ -37,6 +28,7 @@ public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase
         addOutlineAndAssertCaret(orgText, orgText.length() + "\n* ".length());
     }
 
+    @Test
     public void testNewOutlineFromBeginningOfOutline() {
         final String orgText =
             "* I'm an outline\n" +
@@ -44,6 +36,7 @@ public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase
         addOutlineAndAssertCaret(orgText, orgText.length() + "\n* ".length());
     }
 
+    @Test
     public void testNewOutlineFromOutlineBody() {
         final String orgText =
             "* I'm an outline\n" +
@@ -51,6 +44,7 @@ public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase
         moveCaretAddOutlineAndAssertCaret(orgText.length() - 10, orgText, orgText.length() + "\n* ".length());
     }
 
+    @Test
     public void testNewOutlineFromInnerOutlineBody() {
         final String orgText =
             "* I'm an outer outline\n" +
@@ -60,6 +54,7 @@ public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase
         moveCaretAddOutlineAndAssertCaret(orgText.length() - 10, orgText, orgText.length() + "\n** ".length());
     }
 
+    @Test
     public void testNewOutlineFromInnerOutlineBodyWithFollowingOutline() {
         final String orgTextBeforeCaret =
             "* I'm an outer outline\n" +
@@ -76,6 +71,7 @@ public class NewOutlineSameLevelTest extends LightJavaCodeInsightFixtureTestCase
         moveCaretAddOutlineAndAssertCaret(orgTextBeforeCaret.length(), orgText, expectedOrgTextBeforeCaret.length());
     }
 
+    @Test
     public void testNewOutlineWhenFirstOutlineAppearsAfterwards() {
         final String textBeforeCaret = "No outlines at this point\n";
         final String textAfterCaret = "then some text\n" +
