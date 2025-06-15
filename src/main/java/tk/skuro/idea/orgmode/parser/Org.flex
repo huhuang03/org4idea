@@ -34,6 +34,7 @@ KEYWORD={SPACES}*"#+"{INPUT_CHARACTER}+":"{INPUT_OR_SPACES}*{CRLF}?
 UNDERLINE = "_" [^\r\n]* "_"
 BOLD = "*" [^\r\n]+ "*"
 OUTLINE = [*]+ {INPUT_OR_SPACES}*
+VERBATIM = "~" [^~\n\r]+ "~"
 
 // not sure what this was intended to do:
 CODELINE = {SPACES}*": "{INPUT_CHARACTER}*

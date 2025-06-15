@@ -59,6 +59,18 @@ public class LexerTest {
         assertEquals("Outline not properly parsed", OrgTokenTypes.OUTLINE, lexer.getTokenType());
     }
 
+
+    @Test
+    public void canReadVerbatim() {
+        final String outlines =
+            "haha ~some inline code~ end";
+        lexer.start(outlines);
+        assertEquals("Outline not properly parsed", OrgTokenTypes.VERBATIM, lexer.getTokenType());
+
+        eatWhitespace();
+        assertEquals("Outline not properly parsed", OrgTokenTypes.VERBATIM, lexer.getTokenType());
+    }
+
     @Test
     public void canReadBlocks() {
         final String block =

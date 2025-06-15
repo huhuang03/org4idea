@@ -24,6 +24,7 @@ public interface OrgTokenTypes {
   IElementType DRAWER_DELIMITER = new OrgElementType("DRAWER_DELIMITER");
   IElementType KEYWORD = new OrgElementType("KEYWORD");
   IElementType OUTLINE = new OrgElementType("OUTLINE");
+  IElementType VERBATIM = new OrgElementType("VERBATIM");
   IElementType PROPERTIES = new OrgElementType("PROPERTIES");
   IElementType TEXT = new OrgElementType("TEXT");
   IElementType UNDERLINE = new OrgElementType("UNDERLINE");

@@ -27,6 +27,7 @@ public class OrgSyntaxHighlighter extends SyntaxHighlighterBase {
     static {
         fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.COMMENT), OrgHighlighterColors.COMMENTS_ATTR_KEY);
         fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.OUTLINE), OrgHighlighterColors.OUTLINE_ATTR_KEY);
+        fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.VERBATIM), OrgHighlighterColors.VERBATIM_ATTR_KEY);
         fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.BOLD), OrgHighlighterColors.BOLD_ATTR_KEY);
         fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.UNDERLINE), OrgHighlighterColors.UNDERLINE_ATTR_KEY);
         fillMap(ATTRIBUTES, TokenSet.create(OrgTokenTypes.KEYWORD), OrgHighlighterColors.KEYWORD_ATTR_KEY);
