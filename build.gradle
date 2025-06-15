@@ -55,6 +55,13 @@ generateLexer {
 //    purgeOldFiles = true
 }
 
+generateParser {
+    sourceFile = file("src/main/java/tk/skuro/idea/orgmode/parser/Org.bnf")
+    targetRootOutputDir = file("src/main/java")
+    pathToParser = "src/main/java/tk/skuro/idea/orgmode/parser/OrgParser.java"
+    pathToPsiRoot = "src/main/java/tk/skuro/idea/orgmode/psi"
+}
+
 //
 //// 生成 parser
 //task generateParser(type: org.jetbrains.grammarkit.tasks.GenerateParser) {

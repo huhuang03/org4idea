@@ -21,6 +21,7 @@ public class OrgBlockImpl extends OrgPsiElementImpl implements OrgBlock {
     visitor.visitBlock(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof OrgVisitor) accept((OrgVisitor)visitor);
     else super.accept(visitor);

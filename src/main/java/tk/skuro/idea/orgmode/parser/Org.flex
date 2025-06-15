@@ -50,13 +50,13 @@ PROPERTIES_END=[\ \t]*":END:"
 <YYINITIAL> {
     /** Elements that must start at the beginning of the line **/
     ^{OUTLINE}          { yybegin(YYINITIAL); return OUTLINE; }
-    ^{VERBATIM}         { yybegin(YYINITIAL); return VERBATIM; }
     ^{KEYWORD}          { yybegin(YYINITIAL); return KEYWORD; }
     ^{CODELINE}         { yybegin(YYINITIAL); return CODE; }
     ^{PROPERTIES_START} { yybegin(PROPERTIES); return DRAWER_DELIMITER; }
 
     /** Elements that can appear in positions other than beginning of line **/
     {BLOCK_START}       { yybegin(BLOCK); return BLOCK_START; }
+    {VERBATIM}          { return VERBATIM; }
 }
 
 <PROPERTIES> {
