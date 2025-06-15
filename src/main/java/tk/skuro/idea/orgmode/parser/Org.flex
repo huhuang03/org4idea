@@ -50,6 +50,7 @@ PROPERTIES_END=[\ \t]*":END:"
 <YYINITIAL> {
     /** Elements that must start at the beginning of the line **/
     ^{OUTLINE}          { yybegin(YYINITIAL); return OUTLINE; }
+    ^{VERBATIM}         { yybegin(YYINITIAL); return VERBATIM; }
     ^{KEYWORD}          { yybegin(YYINITIAL); return KEYWORD; }
     ^{CODELINE}         { yybegin(YYINITIAL); return CODE; }
     ^{PROPERTIES_START} { yybegin(PROPERTIES); return DRAWER_DELIMITER; }

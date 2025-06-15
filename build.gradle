@@ -1,3 +1,5 @@
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+
 buildscript {
     repositories {
         mavenCentral()
@@ -45,6 +47,14 @@ group 'tk.skuro.intellij'
 //    targetClass = "_OrgLexer"
 //    purgeOldFiles = true
 //}
+
+generateLexer {
+    sourceFile = file("src/main/java/tk/skuro/idea/orgmode/parser/Org.flex")
+    targetOutputDir = file("src/main/java/tk/skuro/idea/orgmode/parser")
+    targetClass = "_OrgLexer"
+//    purgeOldFiles = true
+}
+
 //
 //// 生成 parser
 //task generateParser(type: org.jetbrains.grammarkit.tasks.GenerateParser) {
