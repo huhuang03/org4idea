@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [0.4.3] - 2026-03-18
+### ADD
++ fix _underline_ in source block
+### CHANGED
++ The project has been renamed to orgmode in order to publish it on the IntelliJ Marketplace and make it available to users who need it.
+
 ## [0.4.2] - 2025-06-15
 ### ADD
 + add ~xxx~ syntax

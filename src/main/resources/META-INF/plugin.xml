@@ -1,15 +1,15 @@
 <idea-plugin>
-    <name>Org4Idea_support</name>
-    <description>An OrgMode editor for IntelliJ IDEA</description>
+    <name>OrgMode</name>
+    <description>An OrgMode editor for IntelliJ IDEA, fork from https://github.com/skuro/org4idea</description>
     <category>Custom Languages</category>
-    <version>0.4.2</version>
-    <vendor email="skuro@skuro.tk" url="http://skuro.tk">Carlo Sciolla</vendor>
-    <id>Org4Idea</id>
+    <version>0.4.3</version>
+    <vendor email="huhuang03@gmail.com" url="https://github.com/huhuang03/org4idea">huhuang03</vendor>
+    <id>OrgMode</id>
     <depends>com.intellij.modules.lang</depends>
 
     <description>
         <![CDATA[
-        Idea plugin to edit <a href="http://orgmode.org/">OrgMode</a> files
+        Idea plugin to edit <a href="https://orgmode.org/">OrgMode</a> files
         <ul>
             <li>supports basic outline and comments</li>
             <li>block elements folding</li>
@@ -77,8 +77,9 @@
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="tk.skuro.idea.orgmode.OrgFileTypeFactory" />
-        <lang.parserDefinition language="OrgMode" implementationClass="tk.skuro.idea.orgmode.parser.OrgParserDefinition"/>
+        <fileTypeFactory implementation="tk.skuro.idea.orgmode.OrgFileTypeFactory"/>
+        <lang.parserDefinition language="OrgMode"
+                               implementationClass="tk.skuro.idea.orgmode.parser.OrgParserDefinition"/>
 
         <syntaxHighlighter key="OrgMode" implementationClass="tk.skuro.idea.orgmode.highlight.OrgSyntaxHighlighter"/>
         <colorSettingsPage implementation="tk.skuro.idea.orgmode.highlight.OrgColorSettingsPage"/>
@@ -87,7 +88,8 @@
                               implementationClass="tk.skuro.idea.orgmode.editor.OrgSpellcheckingStrategy"/>
 
         <lang.commenter language="OrgMode" implementationClass="tk.skuro.idea.orgmode.editor.OrgCommenter"/>
-        <lang.foldingBuilder language="OrgMode" implementationClass="tk.skuro.idea.orgmode.editor.folding.OrgFoldingBuilder"/>
+        <lang.foldingBuilder language="OrgMode"
+                             implementationClass="tk.skuro.idea.orgmode.editor.folding.OrgFoldingBuilder"/>
 
         <liveTemplateContext implementation="tk.skuro.idea.orgmode.editor.OrgContextType"/>
         <defaultLiveTemplatesProvider implementation="tk.skuro.idea.orgmode.editor.OrgLiveTemplatesProvider"/>
