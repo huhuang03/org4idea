@@ -66,7 +66,8 @@ PROPERTIES_END=[\ \t]*":END:"
 
 <BLOCK> {
     ^{BLOCK_END}      { yybegin(YYINITIAL); return BLOCK_END; }
-    .                 { return BLOCK_CONTENT; }
+    [^\r\n]+          { return BLOCK_CONTENT; }
+    {CRLF}            { return WHITE_SPACE; }
 }
 
 /** unmatched block delimiters **/
