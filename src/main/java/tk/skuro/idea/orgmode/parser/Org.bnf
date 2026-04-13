@@ -15,7 +15,7 @@
 
 orgFile ::= item_*
 
-private item_ ::= (COMMENT|KEYWORD|CODE|PROPERTIES|WHITE_SPACE|UNMATCHED_DELIMITER|outlineBlock|block|drawer|text_element|verbatim_element)
+private item_ ::= (COMMENT|KEYWORD|CODE|PROPERTIES|WHITE_SPACE|UNMATCHED_DELIMITER|outlineBlock|block|drawer|text_element|verbatim_element|TABLE)
 
 text_element ::= TEXT | UNDERLINE | BOLD | CRLF
 verbatim_element ::= VERBATIM
@@ -23,3 +23,5 @@ verbatim_element ::= VERBATIM
 block ::= BLOCK_START BLOCK_CONTENT* BLOCK_END
 drawer ::= DRAWER_DELIMITER DRAWER_CONTENT* DRAWER_DELIMITER
 outlineBlock ::= OUTLINE
+
+TABLE ::= (TABLE_HEADER | TABLE_ROW) TABLE_ROW*

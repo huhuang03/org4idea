@@ -19,6 +19,7 @@ import static tk.skuro.idea.orgmode.parser.OrgTokenTypes.*;
 
 %state BLOCK
 %state PROPERTIES
+%state TABLE
 
 /** Classes definitions */
 CRLF= \n|\r|\r\n
@@ -44,11 +45,16 @@ BLOCK_END= {SPACES}*"#+END_"{INPUT_CHARACTER}+
 
 PROPERTIES_START=[\ \t]*":PROPERTIES:"
 PROPERTIES_END=[\ \t]*":END:"
+TABLE_ROW = "|" {INPUT_CHARACTER}* {CRLF}?
+TABLE_DIVIDER = "|*" [|*]* {CRLF}?
+TABLE_HEADER = {TABLE_ROW} {TABLE_DIVIDER}
 
 %% /** Lexing Rules */
 
 <YYINITIAL> {
     /** Elements that must start at the beginning of the line **/
+    ^{TABLE_ROW}        { yybegin(TABLE); return TABLE_ROW; }
+    ^{TABLE_HEADER}     { yybegin(TABLE); return TABLE_HEADER; }
     ^{OUTLINE}          { yybegin(YYINITIAL); return OUTLINE; }
     ^{KEYWORD}          { yybegin(YYINITIAL); return KEYWORD; }
     ^{CODELINE}         { yybegin(YYINITIAL); return CODE; }
@@ -57,6 +63,11 @@ PROPERTIES_END=[\ \t]*":END:"
     /** Elements that can appear in positions other than beginning of line **/
     {BLOCK_START}       { yybegin(BLOCK); return BLOCK_START; }
     {VERBATIM}          { return VERBATIM; }
+}
+
+<TABLE> {
+    {TABLE_ROW}     { return TABLE_ROW; }
+    [^]             { yybegin(YYINITIAL); yypushback(1); break; }
 }
 
 <PROPERTIES> {

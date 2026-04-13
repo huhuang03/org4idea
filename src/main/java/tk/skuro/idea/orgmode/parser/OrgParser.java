@@ -36,6 +36,39 @@ public class OrgParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (TABLE_HEADER | TABLE_ROW) TABLE_ROW*
+  public static boolean TABLE(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TABLE")) return false;
+    if (!nextTokenIs(builder_, "<table>", TABLE_HEADER, TABLE_ROW)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TABLE, "<table>");
+    result_ = TABLE_0(builder_, level_ + 1);
+    result_ = result_ && TABLE_1(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // TABLE_HEADER | TABLE_ROW
+  private static boolean TABLE_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TABLE_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, TABLE_HEADER);
+    if (!result_) result_ = consumeToken(builder_, TABLE_ROW);
+    return result_;
+  }
+
+  // TABLE_ROW*
+  private static boolean TABLE_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TABLE_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!consumeToken(builder_, TABLE_ROW)) break;
+      if (!empty_element_parsed_guard_(builder_, "TABLE_1", pos_)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // BLOCK_START BLOCK_CONTENT* BLOCK_END
   public static boolean block(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "block")) return false;
@@ -86,7 +119,7 @@ public class OrgParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COMMENT|KEYWORD|CODE|PROPERTIES|WHITE_SPACE|UNMATCHED_DELIMITER|outlineBlock|block|drawer|text_element|verbatim_element
+  // COMMENT|KEYWORD|CODE|PROPERTIES|WHITE_SPACE|UNMATCHED_DELIMITER|outlineBlock|block|drawer|text_element|verbatim_element|TABLE
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_;
@@ -101,6 +134,7 @@ public class OrgParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = drawer(builder_, level_ + 1);
     if (!result_) result_ = text_element(builder_, level_ + 1);
     if (!result_) result_ = verbatim_element(builder_, level_ + 1);
+    if (!result_) result_ = TABLE(builder_, level_ + 1);
     return result_;
   }
 

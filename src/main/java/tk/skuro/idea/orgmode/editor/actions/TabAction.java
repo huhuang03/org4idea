@@ -13,7 +13,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tk.skuro.idea.orgmode.parser.OrgTokenTypes;
 import tk.skuro.idea.orgmode.psi.OrgPsiElementImpl;
-import tk.skuro.idea.orgmode.util.OrgModeUtilKt;
 
 /**
  * Create a new outline at the same level as the current one. The new outline is created at a different position
@@ -26,19 +25,17 @@ import tk.skuro.idea.orgmode.util.OrgModeUtilKt;
  * @author Carlo Sciolla
  * @since 0.4.0
  */
-public class NewOutlineSameLevel extends AnAction {
+public class TabAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // the file structure
         final PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-        // the file edit
         final Editor editor = e.getData(LangDataKeys.EDITOR);
         if(editor!= null && file != null) {
             final CaretModel caretModel = editor.getCaretModel();
             final int offset = caretModel.getCurrentCaret().getOffset();
             final PsiElement element = file.findElementAt(offset);
-            if (element != null) {
+            if(element != null) {
                 addOutline(element, editor, file);
             } else {
                 addText(editor, file, 0, "* ");
@@ -52,12 +49,21 @@ public class NewOutlineSameLevel extends AnAction {
         // first search if the caret is itself within an outline text
         PsiElement currentOutline = getParentOutlineOrSelf(element);
         if (currentOutline != null) {
-            appendSameLevelOutline(currentOutline, file, editor);
+            final int offset = endOfOutline(currentOutline);
+            final String text = createOutlineSameDepthAs(currentOutline);
+            addText(editor, file, offset, text);
         } else {
             // the caret is not within an outline text, maybe we're in the body of one
             currentOutline = findPreviousOutline(element);
             if (currentOutline != null) {
-                appendSameLevelOutline(currentOutline, file, editor);
+                final int offset = endOfOutline(currentOutline);
+                final String outlineText = createOutlineSameDepthAs(currentOutline);
+                if(isEOF(offset, file)) {
+                    addText(editor, file, offset, outlineText);
+                }
+                else {
+                    addTextAndGoBackOne(editor, file, offset, outlineText + "\n");
+                }
             } else {
                 // there's no outline occurring before the caret, maybe there's one in the following text
                 currentOutline = findNextOutline(element);
@@ -71,17 +77,6 @@ public class NewOutlineSameLevel extends AnAction {
                     addText(editor, file, documentEnd, "* ");
                 }
             }
-        }
-    }
-
-    private void appendSameLevelOutline(PsiElement curOutline, PsiFile file, Editor editor) {
-        final int offset = endOfOutline(curOutline);
-        final String outlineText = createOutlineSameDepthAs(curOutline);
-        if(isEOF(offset, file)) {
-            addText(editor, file, offset, outlineText);
-        }
-        else {
-            addTextAndGoBackOne(editor, file, offset, outlineText + "\n");
         }
     }
 
@@ -186,11 +181,5 @@ public class NewOutlineSameLevel extends AnAction {
 
     private boolean isOutlineBlock(PsiElement candidate) {
         return candidate != null && candidate.getNode().getElementType() == OrgTokenTypes.OUTLINE_BLOCK;
-    }
-
-    @Override
-    public void update(@NotNull AnActionEvent e) {
-        super.update(e);
-        OrgModeUtilKt.hideIfNotOrgMode(e);
     }
 }
