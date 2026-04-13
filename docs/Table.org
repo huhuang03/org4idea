@@ -1,0 +1,49 @@
+For table's parse, I have two ideas:
+* split table header:
+
+#+BEGIN_SRC flex
+TABLE_ROW = "|" {INPUT_CHARACTER}* {CRLF}
+TABLE_DIVIDER = "|" [|*]* "|" {CRLF}
+
+
+<YYINITIAL> {
+    ^{TABLE_ROW}        { yybegin(TABLE); return TABLE_ROW; }
+}
+
+<TABLE> {
+    {TABLE_DIVIDER} { yybegin(TABLE_CONTENT); return TABLE_DIVIDER; }
+    {TABLE_ROW}     { yybegin(TABLE_CONTENT); return TABLE_ROW; }
+    [^]             { yybegin(YYINITIAL); yyless(0); return; }
+}
+
+<TABLE_CONTENT> {
+    {TABLE_ROW}     { return TABLE_ROW; }
+}
+#+END_SRC
+
+#+BEGIN_SRC bnf
+TABLE ::= TABLE_ROW TABLE_DIVIDER? TABLE_ROW*
+#+END_SRC
+
+* a continuous table header
+#+BEGIN_SRC flex
+TABLE_ROW = "|" {INPUT_CHARACTER}* {CRLF}
+TABLE_DIVIDER = "|" [|*]* "|" {CRLF}
+TABLE_HEADER = {TABLE_ROW} {TABLE_DIVIDER}
+#+END_SRC
+
+#+BEGIN_SRC bnf
+<YYINITIAL> {
+    ^{TABLE_HEADER}        { yybegin(TABLE); return TABLE_HEADER; }
+    ^{TABLE_ROW}        { yybegin(TABLE); return TABLE_ROW; }
+}
+
+<TABLE> {
+    {TABLE_ROW}     { return TABLE_ROW; }
+    [^]             { yybegin(YYINITIAL); yyless(0); return; }
+}
+#+END_SRC
+
+#+BEGIN_SRC bnf
+TABLE ::= [TABLE_ROW | TABLE_DIVIDER] TABLE_ROW*
+#+END_SRC

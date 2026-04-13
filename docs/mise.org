@@ -1,0 +1,3 @@
+* ast tree
+* psi tree
+intellij 特有。通常基于ast tree,增加了一些细节

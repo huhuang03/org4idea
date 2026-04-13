@@ -1,8 +1,12 @@
 buildscript {
+    ext.kotlin_version = '2.3.10'
     repositories {
         mavenCentral()
         // 添加 JetBrains 的 plugin 仓库以解决 GrammarKit 插件问题
         maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -13,6 +17,7 @@ plugins {
 }
 
 apply plugin: 'idea'
+apply plugin: 'kotlin'
 
 repositories {
     mavenCentral()
@@ -41,7 +46,7 @@ generateLexer {
     sourceFile = file("src/main/java/tk/skuro/idea/orgmode/parser/Org.flex")
     targetOutputDir = file("src/main/java/tk/skuro/idea/orgmode/parser")
     targetClass = "_OrgLexer"
-    purgeOldFiles = true
+    purgeOldFiles = false
 }
 
 generateParser {
@@ -49,4 +54,11 @@ generateParser {
     targetRootOutputDir = file("src/main/java")
     pathToParser = "src/main/java/tk/skuro/idea/orgmode/parser/OrgParser.java"
     pathToPsiRoot = "src/main/java/tk/skuro/idea/orgmode/psi"
+    purgeOldFiles = false
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+kotlin {
+    jvmToolchain(17)
 }

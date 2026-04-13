@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class OrgVisitor extends PsiElementVisitor {
 
+  public void visitTable(@NotNull OrgTable o) {
+    visitPsiElement(o);
+  }
+
   public void visitBlock(@NotNull OrgBlock o) {
     visitPsiElement(o);
   }

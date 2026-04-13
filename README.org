@@ -46,3 +46,6 @@ These feature only requires some Intellij customisation of the plugin, and basic
 * License
 
 All files in this repository except OrgMode logos are released under the [[LICENSE.txt][MIT License]].
+
+* Helper
+- https://plugins.jetbrains.com/docs/intellij/custom-language-support.html

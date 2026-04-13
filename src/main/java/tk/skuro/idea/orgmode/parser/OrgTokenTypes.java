@@ -11,6 +11,7 @@ public interface OrgTokenTypes {
   IElementType BLOCK = new OrgTokenType("BLOCK");
   IElementType DRAWER = new OrgTokenType("DRAWER");
   IElementType OUTLINE_BLOCK = new OrgTokenType("OUTLINE_BLOCK");
+  IElementType TABLE = new OrgTokenType("TABLE");
   IElementType TEXT_ELEMENT = new OrgTokenType("TEXT_ELEMENT");
   IElementType VERBATIM_ELEMENT = new OrgTokenType("VERBATIM_ELEMENT");
 
@@ -26,6 +27,8 @@ public interface OrgTokenTypes {
   IElementType KEYWORD = new OrgElementType("KEYWORD");
   IElementType OUTLINE = new OrgElementType("OUTLINE");
   IElementType PROPERTIES = new OrgElementType("PROPERTIES");
+  IElementType TABLE_HEADER = new OrgElementType("TABLE_HEADER");
+  IElementType TABLE_ROW = new OrgElementType("TABLE_ROW");
   IElementType TEXT = new OrgElementType("TEXT");
   IElementType UNDERLINE = new OrgElementType("UNDERLINE");
   IElementType UNMATCHED_DELIMITER = new OrgElementType("UNMATCHED_DELIMITER");
@@ -43,6 +46,9 @@ public interface OrgTokenTypes {
       }
       else if (type == OUTLINE_BLOCK) {
         return new OrgOutlineBlockImpl(node);
+      }
+      else if (type == TABLE) {
+        return new OrgTableImpl(node);
       }
       else if (type == TEXT_ELEMENT) {
         return new OrgTextElementImpl(node);

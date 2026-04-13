@@ -2,7 +2,7 @@
     <name>OrgMode</name>
     <description>An OrgMode editor for IntelliJ IDEA, fork from https://github.com/skuro/org4idea</description>
     <category>Custom Languages</category>
-    <version>0.4.3</version>
+    <version>0.5.0-alpha.1</version>
     <vendor email="huhuang03@gmail.com" url="https://github.com/huhuang03/org4idea">huhuang03</vendor>
     <id>OrgMode</id>
     <depends>com.intellij.modules.lang</depends>
@@ -23,6 +23,15 @@
 
     <change-notes>
         <![CDATA[
+            <p>0.5.0-alpha.1</p>
+            <ul>
+                <li>add tab in table support</li>
+            </ul>
+            <p>0.4.3</p>
+            <ul>
+                <li>fix _underline_ in source block</li>
+                <li>The project has been renamed to orgmode in order to publish it on the IntelliJ Marketplace</li>
+            </ul>
             <p>0.4.2</p>
             <h3>Fork from 0.4.1</h3>
             <ul>
@@ -71,13 +80,19 @@
 
     <actions>
         <action id="Org4Idea.NewOutlineSameLevel" class="tk.skuro.idea.orgmode.editor.actions.NewOutlineSameLevel"
-                text="New outline" description="Create a new outline at the same level as the current one">
+                text="New Outline" description="Create a new outline at the same level as the current one">
             <keyboard-shortcut keymap="$default" first-keystroke="control alt meta ENTER"/>
+        </action>
+        <action id="Org4Idea.Tab" class="tk.skuro.idea.orgmode.table.TabInTable"
+                text="Tab in OrgMode Table"
+                description="Auto format table, and auto in insert a new line if in last cell of table">
+            <keyboard-shortcut keymap="$default" first-keystroke="Tab"/>
         </action>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="tk.skuro.idea.orgmode.OrgFileTypeFactory"/>
+        <fileType name="OrgMode" language="OrgMode" implementationClass="tk.skuro.idea.orgmode.OrgFileType"
+                  extensions="org"/>
         <lang.parserDefinition language="OrgMode"
                                implementationClass="tk.skuro.idea.orgmode.parser.OrgParserDefinition"/>
 

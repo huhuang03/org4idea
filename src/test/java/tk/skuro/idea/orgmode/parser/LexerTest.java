@@ -1,6 +1,7 @@
 package tk.skuro.idea.orgmode.parser;
 
 import com.intellij.psi.tree.IElementType;
+import org.bouncycastle.crypto.digests.Blake2xsDigest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,13 @@ public class LexerTest {
     @Before
     public void setup() {
         lexer = new OrgLexer();
+    }
+
+    @Test
+    public void readTable() {
+        final String table1 = "|||\n";
+        lexer.start(table1);
+        assertEquals(OrgTokenTypes.TABLE_ROW, lexer.getTokenType());
     }
 
     @Test

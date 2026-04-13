@@ -1,0 +1,5 @@
+#+BEGIN_SRC kotlin
+val element = file.findElementAt(offset)
+#+END_SRC
+
+The element type is ~PsiElement(TABLE_HEADER)~ class is ~class com.intellij.psi.impl.source.tree.LeafPsiElement~

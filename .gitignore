@@ -27,3 +27,5 @@ org4idea.iws
 .idea/
 *~
 local.*
+
+.kotlin/
