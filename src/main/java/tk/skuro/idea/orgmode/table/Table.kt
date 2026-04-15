@@ -3,10 +3,10 @@ package tk.skuro.idea.orgmode.table
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.refactoring.suggested.endOffset
-import com.intellij.refactoring.suggested.startOffset
 import org.jetbrains.annotations.VisibleForTesting
+import tk.skuro.idea.orgmode.common.endOffset
 import tk.skuro.idea.orgmode.common.isElementType
+import tk.skuro.idea.orgmode.common.startOffset
 import tk.skuro.idea.orgmode.parser.OrgTokenTypes
 
 data class Pos(val row: Int, val col: Int)

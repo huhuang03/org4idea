@@ -83,10 +83,11 @@
                 text="New Outline" description="Create a new outline at the same level as the current one">
             <keyboard-shortcut keymap="$default" first-keystroke="control alt meta ENTER"/>
         </action>
+        <!--suppress PluginXmlI18n -->
         <action id="Org4Idea.Tab" class="tk.skuro.idea.orgmode.table.TabInTable"
                 text="Tab in OrgMode Table"
                 description="Auto format table, and auto in insert a new line if in last cell of table">
-            <keyboard-shortcut keymap="$default" first-keystroke="Tab"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="TAB"/>
         </action>
     </actions>
 
