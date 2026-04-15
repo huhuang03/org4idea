@@ -4,29 +4,19 @@ import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.ReadResult
-import com.intellij.openapi.application.WriteAction
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.progress.ModalTaskOwner.project
-import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.refactoring.suggested.endOffset
-import com.intellij.refactoring.suggested.startOffset
+import tk.skuro.idea.orgmode.common.endOffset
 import tk.skuro.idea.orgmode.common.isEOF
-import tk.skuro.idea.orgmode.util.hideIfNotOrgMode
+import tk.skuro.idea.orgmode.common.startOffset
 import tk.skuro.idea.orgmode.logger
-import tk.skuro.idea.orgmode.parser.OrgElementType
 import tk.skuro.idea.orgmode.parser.OrgTokenTypes
-import tk.skuro.idea.orgmode.psi.OrgPsiElementImpl
-import tk.skuro.idea.orgmode.psi.OrgTable
-import tk.skuro.idea.orgmode.psi.impl.OrgTableImpl
 import tk.skuro.idea.orgmode.util.OrgModeUtil
+import tk.skuro.idea.orgmode.util.hideIfNotOrgMode
 
 
 open class TabInTable : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         try {
-            logger.warn("actionPerformed!!")
             val file = e.getData(LangDataKeys.PSI_FILE)
             val editor = e.getData(LangDataKeys.EDITOR)
             if (file == null || editor == null) {
@@ -53,7 +43,6 @@ open class TabInTable : AnAction() {
             }
             val table = Table.Parser.fromTablePsi(editor, tablePsi)
             val newPos = table.doTabAtOffset(offset - tablePsi.startOffset)
-            logger.warn("new pos: $newPos")
             val newText = table.calcText()
             if (newText != tablePsi.text) {
                 WriteCommandAction.runWriteCommandAction(tablePsi.project) {
@@ -61,7 +50,6 @@ open class TabInTable : AnAction() {
                 }
             }
             val newOffset = table.calcOffset(newPos) ?: return
-            logger.warn("newOffset: $newOffset")
             editor.caretModel.moveToOffset(newOffset)
         } catch (t: Throwable) {
             logger.error(t)
